@@ -1,6 +1,6 @@
 use tz::{timezone, DateTime};
 
-fn dow_to_str(dow: u8) -> &'static str {
+pub fn dow_to_str(dow: u8) -> &'static str {
     match dow {
         0 => "Sun",
         1 => "Mon",
@@ -13,7 +13,7 @@ fn dow_to_str(dow: u8) -> &'static str {
     }
 }
 
-fn mon_to_str(mon: u8) -> &'static str {
+pub fn mon_to_str(mon: u8) -> &'static str {
     match mon {
         1 => "Jan",
         2 => "Feb",

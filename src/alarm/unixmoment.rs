@@ -14,12 +14,18 @@ fn deconstruct_duration(d: Duration) -> (i64, i64) {
 }
 
 impl UnixMoment {
+    pub fn new(s: impl Into<i64>) -> Self {
+        Self(s.into(), 0)
+    }
     pub fn now() -> Self {
         let sys_t = std::time::SystemTime::now();
         let d = sys_t
             .duration_since(std::time::UNIX_EPOCH)
             .expect("Could not get current SystemTime");
         Self::from(d)
+    }
+    pub fn seconds(&self) -> i64 {
+        self.0
     }
     fn next_unit(&self, unit_seconds: i64) -> Self {
         let s = self.0 + unit_seconds - self.0 % unit_seconds;

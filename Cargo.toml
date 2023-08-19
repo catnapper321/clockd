@@ -3,6 +3,14 @@ name = "clockd"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "clockd"
+path = "src/main.rs"
+
+[[bin]]
+name = "clockctl"
+path = "src/clockctl.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -19,7 +27,6 @@ maud = "*"
 # unstable required for the process module
 async-std = { version = "*", features = ["attributes", "unstable"] }
 async-io = "*"
-# futures = "*"
 futures-lite = { version = "*" }
 futures-util = "*"
 async-broadcast = "*"
