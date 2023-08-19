@@ -1,0 +1,33 @@
+[package]
+name = "clockd"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tz-rs = "*"
+# chrono = "*"
+tracing = "*"
+tracing-subscriber = "*"
+serde = {version = "*", features = ["derive"]}
+serde_json = "*"
+clap = {version = "*", features = ["derive", "env"]}
+tide = "*"
+maud = "*"
+
+# unstable required for the process module
+async-std = { version = "*", features = ["attributes", "unstable"] }
+async-io = "*"
+# futures = "*"
+futures-lite = { version = "*" }
+futures-util = "*"
+async-broadcast = "*"
+
+nom = "*"
+
+[profile.release]
+lto = true
+opt-level = "z"
+strip = true
+codegen-units = 1
