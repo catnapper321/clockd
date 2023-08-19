@@ -15,8 +15,12 @@ pub async fn start_audio_task(mut event_rx: broadcast::Receiver<AppEvent>) {
             AppEvent::Ring(Alarm { soundfile: Some(soundfile), .. }) => {
                 if child.is_none() {
                     let mut cmd = make_audio_command(soundfile.into());
-                    child = cmd.spawn().ok();
-
+                    let spawn_result = cmd.spawn();
+                    if let Ok(ch) = spawn_result {
+                        child = Some(ch);
+                    } else {
+                        error!("Could not start audio process: {spawn_result:?}");
+                    }
                 }
             },
             AppEvent::Ack => {
