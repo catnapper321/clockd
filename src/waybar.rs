@@ -49,7 +49,8 @@ enum WaybarDisplayMode {
 }
 
 fn tooltip_section(x: &mut String, heading: &str) {
-    writeln!(x, "{heading}:\n{TOOLTIP_HRULE}");
+    writeln!(x, "{heading}:");
+    // writeln!(x, "{heading}:\n{TOOLTIP_HRULE}");
 }
 
 fn update_tooltip<'a, 'b>(
@@ -57,18 +58,24 @@ fn update_tooltip<'a, 'b>(
     update: &mut WaybarUpdate,
 ) {
     update.tooltip.clear();
-    tooltip_section(&mut update.tooltip, "Pending Alarms");
+    if alarm_list.pending_len() > 0 {
+        tooltip_section(&mut update.tooltip, "Pending Alarms");
+    }
     for a in alarm_list.pending() {
         let s = update.now.seconds_until(a.end_t);
         writeln!(update.tooltip, "{} {}", a.name, humanize_seconds(s));
     }
-    tooltip_section(&mut update.tooltip, "Current Alarms");
+    if alarm_list.alarming_len() > 0 {
+        tooltip_section(&mut update.tooltip, "Current Alarms");
+    }
     for a in alarm_list.alarming() {
         let s = update.now.seconds_until(a.end_t);
         writeln!(update.tooltip, "{} {}", a.name, humanize_seconds(s));
     }
-    writeln!(update.tooltip, "{TOOLTIP_HRULE}");
-    writeln!(update.tooltip, "{}", update.time_display_full);
+    if alarm_list.alarming_len() > 0 || alarm_list.pending_len() > 0 {
+        writeln!(update.tooltip, "{TOOLTIP_HRULE}");
+    }
+    write!(update.tooltip, "{}", update.time_display_full);
 }
 
 fn update_text_clock(update: &mut WaybarUpdate, pending_len: usize) {
