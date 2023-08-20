@@ -123,12 +123,11 @@ pub async fn waybar_display_server(
         let x = alarm_list.read().unwrap();
         update_display(&mut update, x, display_mode);
     }
+    // TEST:
+    // println!("{}", serde_json::to_string(&update).unwrap());
+    fdrecv::print_json_to_fds(&update);
 
     while let Some(ev) = event_rx.next().await {
-
-        // TEST:
-        // println!("{}", serde_json::to_string(&update).unwrap());
-        fdrecv::print_json_to_fds(&update);
 
         match ev {
             AppEvent::Ring(_) => {
@@ -183,6 +182,10 @@ pub async fn waybar_display_server(
             },
             AppEvent::NewListener => {},
         }
+
+        // TEST:
+        // println!("{}", serde_json::to_string(&update).unwrap());
+        fdrecv::print_json_to_fds(&update);
 
     }
     unreachable!()

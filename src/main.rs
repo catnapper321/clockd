@@ -34,7 +34,8 @@ pub const ONE_SECOND: Duration = Duration::from_secs(1);
 
 fn duration_to_next_minute() -> Result<Duration, TimeError> {
     let now = unix_seconds_now();
-    let r = 60000 - now.as_millis() % 60000;
+    // HACK: +1ms to avoid timers from firing a few nanos early
+    let r = 60001 - now.as_millis() % 60000;
     Ok(Duration::from_millis(r as u64))
 }
 
