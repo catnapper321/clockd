@@ -8,7 +8,7 @@ use std::path::PathBuf;
 mod alarm;
 pub use alarm::*;
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum AppCommand {
     Add(AlarmSpec),
     Remove(UnixMoment),
