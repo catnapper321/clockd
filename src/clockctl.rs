@@ -30,6 +30,7 @@ pub enum SubCommand {
     },
     Ack,
     List,
+    SwitchDisplay,
 }
 
 type Anything<T> = Result<T, Box<dyn std::error::Error + Send + Sync>>;
@@ -65,6 +66,9 @@ pub fn main() -> Anything<()> {
         SubCommand::List => {
             todo!()
         },
+        SubCommand::SwitchDisplay => {
+            send_command(cmd_socket, AppCommand::SwitchDisplay)?;
+        }
     }
     Ok(())
 }
